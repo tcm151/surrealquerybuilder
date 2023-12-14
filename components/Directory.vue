@@ -103,7 +103,7 @@ function moveItem(target: DirectoryItem) {
     <section class="directory column g-2">
         <header class="row center-inline g-2">
             <div class="fill-1 row g-2">
-                <h4
+                <span
                     class="row center-inline g-2"
                     v-for="folder in calculatePath()"
                     @click="selectItem(folder)"
@@ -113,7 +113,7 @@ function moveItem(target: DirectoryItem) {
                     <i class="fa-solid fa-caret-right"></i>
                     <span v-if="folder.name == ''">{{ root }}</span>
                     <span v-else>{{ folder.name }}</span>
-                </h4>
+                </span>
             </div>
             <button class="link" @click="addFile" v-if="buttons?.includes('add-file')">
                 <i class="fa-solid fa-file-circle-plus"></i>
@@ -137,8 +137,11 @@ function moveItem(target: DirectoryItem) {
                     <input type="text" spellcheck="false" v-model="item.name" @keydown.enter="saveItem(item)">
                 </div>
                 <span class="row center-inline g-2" v-else>
-                    <i class="fa-solid fa-folder" v-if="item.type =='folder'"></i>
-                    <span>{{ item.name }}</span>
+                    <i class="fa-solid fa-folder" v-if="item.type =='folder'" />
+                    <span class="fill-1">{{ item.name }}</span>
+                    <i class="options fa-solid fa-pen" />
+                    <i class="options fa-solid fa-rotate" />
+                    <i class="options fa-solid fa-trash-can" />
                 </span>
             </div>
         </div>
@@ -157,8 +160,8 @@ header {
     div {
         padding: 5px 0.75rem;
         border-radius: 0.25rem;
-        color: $blue;
-        background-color: $blue-light;
+        color: $purple-light;
+        background-color: $purple;
     }
 
     span {
@@ -168,17 +171,31 @@ header {
 
 header.row, header.row div.row {
     align-items: stretch;
+
+    span {
+        font-weight: 700;
+    }
 }
 
 div.folder {
     cursor: pointer;
     padding: 0.25rem 0.75rem;
     border-radius: 0.25rem;
-    background-color: $white-1;
+    background-color: $black-1;
+
+    span {
+        font-size: 0.95rem;
+        font-weight: 400;
+        font-family: 'Source Code Pro', monospace;
+    }
+
+    i:hover {
+        color: $black-1;
+    }
 }
 
 div.folder:hover {
-    background-color: $white-3;
+    background-color: $black-2;
 }
 
 div.folder:has(input) {
