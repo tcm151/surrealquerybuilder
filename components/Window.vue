@@ -34,7 +34,7 @@ function resizePopup() {
                     <i :class="icon" v-if="icon"></i>
                     <h1 v-if="title">{{ title }}</h1>
                 </div>
-                <button class="close px-3" @click="emit('close')">
+                <button class="close px-4" @click="emit('close')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </header>
@@ -74,7 +74,7 @@ article.window {
 
     @include column;
     border-radius: 0.5rem;
-    background-color: $white-0;
+    background-color: $black-0;
     // box-shadow: 0.25rem 0.5rem 1rem -0.25rem $black-4, 0 0 0.33rem 1px $black-4;
     animation: fade-in 256ms;
 }
@@ -114,7 +114,7 @@ header.title-bar {
     button.close:hover {
         border-radius: 0;
         border-top-right-radius: 0.5rem;
-        background-color: $red;
+        background-color: $pink;
     }
 }
 
@@ -122,8 +122,8 @@ section.window-slot {
     padding: 1rem;
     @include column;
     border-radius: 0 0 0.5rem 0.5rem;
-    border: 1px solid $white-2;
-    background-color: $white-0;
+    border: 1px solid $black-2;
+    background-color: $black-1;
     overflow-y: auto;
 }
 
