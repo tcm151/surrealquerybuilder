@@ -92,6 +92,7 @@ async function submitQuery() {
         })
     }
     catch (ex: any) {
+        results.value = [{ result: ex.data.information }]
         hints.addError("Failed to execute query.")
     }
 }
