@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
-    devtools: { enabled: true },
-    ssr: true,
+    ssr: false,
+    devtools: { enabled: false },
     modules: [
         "@pinia/nuxt",
         "@vueuse/nuxt"
