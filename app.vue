@@ -155,7 +155,7 @@ async function submitQuery() {
                 </div>
             </header>
             <section class="results column g-2" v-if="tab == 'Results'">
-                <div class="result column g-2" v-for="result in results">
+                <div class="result column g-2" v-for="result in results.filter(r => r.result != null)">
                     <code class="p-4">{{ result.result }}</code>
                 </div>
             </section>
