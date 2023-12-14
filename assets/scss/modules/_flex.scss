@@ -1,0 +1,28 @@
+@mixin column($gap: 0em) {
+    gap: $gap;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+@mixin column-wrap($gap: 0em) {
+    gap: $gap;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+@mixin row($gap: 0em) {
+    gap: $gap;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+@mixin row-wrap($gap: 0em) {
+    gap: $gap;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+@mixin fit-width($width: 100%, $padding: 0rem) {
+    width: calc(100% - (2 * $padding));
+    max-width: $width;
+}

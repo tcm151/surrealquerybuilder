@@ -1,0 +1,66 @@
+@use "modules/flex" as *;
+
+.row {
+    @include row;
+}
+
+.row.center-block {
+    align-items: center;
+}
+
+.row.center-inline {
+    justify-content: center;
+}
+
+.row.center {
+    align-items: center;
+    justify-content: center;
+}
+
+.row-wrap {
+    @include row-wrap;
+    white-space: nowrap;
+}
+
+.column {
+    @include column;
+}
+
+.column.center-block {
+    align-items: center;
+}
+
+.column.center-inline {
+    justify-content: center;
+}
+
+.column.center {
+    align-items: center;
+    justify-content: center;
+}
+
+.column-wrap {
+    @include column-wrap;
+}
+
+.fill-1 { flex-grow: 1 }
+.fill-2 { flex-grow: 2 }
+.fill-3 { flex-grow: 3 }
+.fill-4 { flex-grow: 4 }
+.fill-5 { flex-grow: 5 }
+.fill-max { flex-grow: 100 }
+
+.shrink-1 { flex-shrink: 1 }
+.shrink-2 { flex-shrink: 2 }
+.shrink-3 { flex-shrink: 3 }
+.shrink-4 { flex-shrink: 4 }
+.shrink-5 { flex-shrink: 5 }
+.shrink-max { flex-shrink: 100 }
+
+.g-0 { gap: 0 !important }
+.g-1 { gap: 0.25rem !important }
+.g-2 { gap: 0.5rem !important }
+.g-3 { gap: 0.75rem !important }
+.g-4 { gap: 1rem !important }
+.g-5 { gap: 1.5rem !important }
+.g-6 { gap: 3rem !important }
