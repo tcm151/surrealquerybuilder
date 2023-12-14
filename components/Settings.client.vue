@@ -9,7 +9,8 @@ const emit = defineEmits<{
     (event: 'close'): void
 }>()
 
-const { settings } = storeToRefs(useQuery())
+const events = useEvents()
+const { settings } = storeToRefs(useSettings())
 
 </script>
 
@@ -28,7 +29,7 @@ const { settings } = storeToRefs(useQuery())
                 </div>
                 <div class="field">
                     <label>Namespace</label>
-                    <input type="text" v-model="settings.namespace">
+                    <input type="text" v-model="settings.namespace" @change="events.publish(Trigger.switchedNamespaces)">
                 </div>
                 <div class="field">
                     <label>Database</label>
