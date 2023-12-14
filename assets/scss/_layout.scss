@@ -4,11 +4,11 @@
     @include row;
 }
 
-.row.center-block {
+.row.center-inline {
     align-items: center;
 }
 
-.row.center-inline {
+.row.center-block {
     justify-content: center;
 }
 
@@ -26,11 +26,11 @@
     @include column;
 }
 
-.column.center-block {
+.column.center-inline {
     align-items: center;
 }
 
-.column.center-inline {
+.column.center-block {
     justify-content: center;
 }
 

@@ -104,7 +104,7 @@ function moveItem(target: DirectoryItem) {
         <header class="row center-inline g-2">
             <div class="fill-1 row g-2">
                 <h4
-                    class="row center-block g-2"
+                    class="row center-inline g-2"
                     v-for="folder in calculatePath()"
                     @click="selectItem(folder)"
                     @dragover.prevent=""
@@ -132,11 +132,11 @@ function moveItem(target: DirectoryItem) {
                 @drop="moveItem(item)"
                 @contextmenu.prevent="emit('removeItem', item)"
             >
-                <div class="editing row center-block" v-if="item.editing">
+                <div class="editing row center-inline" v-if="item.editing">
                     <i class="fa-solid fa-folder pl-3" v-if="item.type =='folder'"></i>
                     <input type="text" spellcheck="false" v-model="item.name" @keydown.enter="saveItem(item)">
                 </div>
-                <span class="row center-block g-2" v-else>
+                <span class="row center-inline g-2" v-else>
                     <i class="fa-solid fa-folder" v-if="item.type =='folder'"></i>
                     <span>{{ item.name }}</span>
                 </span>
