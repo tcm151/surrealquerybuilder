@@ -6,8 +6,9 @@ html {
     overflow: hidden;
     font-size: 14px;
     font-weight: 500;
+    color: $white-0;
     font-family: "Montserrat", sans-serif;
-    background-color: $white-1;
+    background-color: $black-0;
 }
 
 body, figure {
@@ -29,13 +30,13 @@ button {
     font-family: inherit;
     font-weight: 700;
 
-    background-color: $white-2;
+    background-color: $black-2;
 }
 
 button:hover {
     cursor: pointer;
-    color: $white-0;
-    background-color: $white-3;
+    color: $black-0;
+    background-color: $black-3;
     transition: color 256ms, background-color 256ms;
 }
 
@@ -60,9 +61,10 @@ button:hover {
         font-family: inherit;
         font-weight: 500;
 
-        border: 1px solid $white-1;
+        color: inherit;
+        border: 1px solid $black-2;
         border-radius: 0.25rem;
-        background-color: $white-0;
+        background-color: $black-0;
     }
 
     textarea {
@@ -85,7 +87,7 @@ button:hover {
 code {
     padding: 0.1rem 0.33rem;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 400;
     font-family: 'Source Code Pro', monospace;
     border-radius: 0.5rem;
     background-color: $white-1 !important;
@@ -115,7 +117,7 @@ h1 {
     font-size: 2rem;
     font-weight: 800;
     line-height: 2rem;
-    // letter-spacing: -1px;
+    letter-spacing: -1px;
     word-spacing: -2px;
 }
 
@@ -123,14 +125,14 @@ h2 {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.5rem;
-    // letter-spacing: -0.5px;
+    letter-spacing: -0.5px;
     word-spacing: -1.5px;
 }
 
 h3 {
     font-size: 1.25rem;
     line-height: 1.25rem;
-    // letter-spacing: -0.25px;
+    letter-spacing: -0.25px;
     word-spacing: -1px;
 }
 

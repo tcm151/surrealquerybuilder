@@ -1,40 +1,41 @@
 @use "sass:color";
 
 //> COLORS
-$black-0: #1A202D;
-$black-1: #272E3C;
+$black-0: #14141C;
+$black-1: #272838;
 $black-2: #393A49;
-$black-3: #656672;
-$black-4: #989CAD;
+$black-3: #444554;
+$black-4: #575966;
+// $black-4: #6A6C77;
 
+$black-5: #8F919A;
+$white-5: #8F919A;
+
+$white-4: #B4B6BC;
 $white-3: #C0C2C7;
-$white-2: #D8DADC;
-$white-1: #EBEBEB;
+$white-2: #E0E0E2;
+$white-1: #F0F0F1;
 $white-0: #FAFAFA;
 
-$green: #1FAD83;
+$green: #68DE74;
 $green-light: color.scale($green, $lightness: 80%);
 $green-dark: color.scale($green, $lightness: -80%);
 
-$yellow: #FFCF33;
+$yellow: #FFDE00;
 $yellow-light: color.scale($yellow, $lightness: 65%);
 $yellow-dark: color.scale($yellow, $lightness: -65%);
 
-$red: #F55D3E;
-$red-light: color.scale($red, $lightness: 80%);
-$red-dark: color.scale($red, $lightness: -50%);
-
-$blue: #78C3FB;
-$blue-light: color.scale($blue, $lightness: 70%);
-$blue-dark: color.scale($blue, $lightness: -70%);
-
-$pink: #ff009e;
+$pink: #FF009E;
 $pink-light: color.scale($pink, $lightness: 75%);
 $pink-dark: color.scale($pink, $lightness: -75%);
 
 $purple: #8700ff;
 $purple-light: color.scale($purple, $lightness: 75%);
 $purple-dark: color.scale($purple, $lightness: -75%);
+
+$blue: #0084ff;
+$blue-light: color.scale($blue, $lightness: 70%);
+$blue-dark: color.scale($blue, $lightness: -70%);
 
 
 //> OVERRIDES
@@ -44,4 +45,67 @@ $info:    $purple;
 
 $success: $green;
 $warning: $yellow;
-$danger: $red;
+$danger: $pink;
+
+.dark {
+    color: $white-0;
+    background-color: $black-0;
+}
+
+.dark:hover {
+    background-color: $black-3;
+}
+
+.success {
+    color: $green-light;
+    background-color: $green;
+}
+
+.success:hover {
+    color: $green;
+    background-color: $green-light;
+}
+
+.warning {
+    color: $yellow-light;
+    background-color: $yellow;
+}
+
+.warning:hover {
+    color: $yellow;
+    background-color: $yellow-light;
+}
+
+.danger {
+    color: $pink-light;
+    background-color: $pink;
+}
+
+.danger:hover {
+    color: $pink;
+    background-color: $pink-light;
+}
+
+.link {
+    color: $purple-light;
+    background-color: $purple;
+}
+
+.link:hover {
+    color: $purple;
+    background-color: $purple-light;
+}
+
+.info {
+    color: $blue-light;
+    background-color: $blue;
+}
+
+.info:hover {
+    color: $blue;
+    background-color: $blue-light;
+}
+
+.success, .negative, .danger, .info, .link {
+    transition: color 256ms, background-color 256ms;
+}
