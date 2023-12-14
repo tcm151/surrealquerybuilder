@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Hint } from '~/composables/hints';
+import type { Hint } from '~/composables/hints';
 
 const hints = useHints()
 
@@ -19,9 +19,11 @@ function getColor(hint: Hint) {
 
 <template>
     <aside class="hints">
-        <div class="item px-4 py-2" v-for="hint in hints.items" :style="{ backgroundColor: getColor(hint) }">
-            {{ hint.message }}
-        </div>
+        <TransitionGroup name="hints">
+            <div class="item px-4 py-2" v-for="hint in hints.items" :key="hint.number" :style="{ backgroundColor: getColor(hint) }">
+                {{ hint.message }}
+            </div>
+        </TransitionGroup>
     </aside>
 </template>
 
@@ -53,10 +55,10 @@ function getColor(hint: Hint) {
     }
 }
 
-@keyframes fade-in {
-    0% { opacity: 0% }
-    100% { opacity: 100% }
-}
+// @keyframes fade-in {
+//     0% { opacity: 0% }
+//     100% { opacity: 100% }
+// }
 
 .item {
     position: relative;
@@ -70,5 +72,23 @@ function getColor(hint: Hint) {
                 0 0 0.33rem 1px $white-3;
     animation: fade-in 256ms;
     pointer-events: all;
+}
+
+.hints-move, .hints-enter-active, .hints-leave-active {
+    transition: all 128ms ease;
+}
+
+.hints-enter-from {
+    @media only screen and (max-aspect-ratio: 1/1) {
+        transform: translateY(-200%);
+    }
+    
+    @media only screen and (min-aspect-ratio: 1/1) {
+        transform: translateY(200%);
+    }
+}
+
+.hints-enter-from, .hints-leave-to {
+    opacity: 0;
 }
 </style>
