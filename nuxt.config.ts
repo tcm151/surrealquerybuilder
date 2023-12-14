@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
     devtools: { enabled: true },
-    ssr: false,
+    ssr: true,
     modules: [
         "@pinia/nuxt",
         "@vueuse/nuxt"
@@ -21,6 +21,8 @@ export default defineNuxtConfig({
         '~/assets/scss/styles.scss',
     ],
     app: {
+        baseURL: '/surrealquerybuilder/',
+        buildAssetsDir: 'assets',
         head: {
             title: "Surreal Query Builder",
             link: [
