@@ -29,19 +29,20 @@ function resizePopup() {
 <template>
     <main class="popup column center" v-if="props.visible">
         <article class="window" ref="window" :style="{ width: width ?? 'fit-content', height: height ?? 'auto', maxWidth: maxWidth, maxHeight: maxHeight }">
-            <section class="title-bar">
-                <div class="left row center-inline g-2 px-4 py-2">
+            <header class="title-bar">
+                <div class="left row center-inline g-2 px-3 py-2">
                     <i :class="icon" v-if="icon"></i>
-                    <h2 class="title" v-if="title">{{ title }}</h2>
+                    <h1 v-if="title">{{ title }}</h1>
                 </div>
                 <button class="close px-3" @click="emit('close')">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-            </section>
+            </header>
             <section class="window-slot">
                 <slot />
             </section>
         </article>
+        <!-- <div class="filler" /> -->
     </main>
 </template>
 
@@ -69,24 +70,28 @@ main.popup {
 }
 
 article.window {
-    position: absolute;
+    // position: absolute;
 
     @include column;
-    border-radius: 0.25rem;
-    background-color: white;
-    box-shadow: 0.25rem 0.5rem 1rem -0.25rem #BBBA, 0 0 0.33rem 1px #CCCA;
+    border-radius: 0.5rem;
+    background-color: $white-0;
+    // box-shadow: 0.25rem 0.5rem 1rem -0.25rem $black-4, 0 0 0.33rem 1px $black-4;
     animation: fade-in 256ms;
 }
 
-section.title-bar {
+header.title-bar {
     @include row (1rem);
     align-items: stretch;
     justify-content: space-between;
     color: $white-0;
     background-color: $black-0;
-    border-top-left-radius: 0.25rem;
-    border-top-right-radius: 0.25rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
     user-select: none;
+
+    title {
+        color: $white-0;
+    }
 
     div.left {
         i {
@@ -108,7 +113,7 @@ section.title-bar {
     
     button.close:hover {
         border-radius: 0;
-        border-top-right-radius: 0.25rem;
+        border-top-right-radius: 0.5rem;
         background-color: $red;
     }
 }
@@ -116,8 +121,13 @@ section.title-bar {
 section.window-slot {
     padding: 1rem;
     @include column;
-    border-radius: 0 0 0.25rem 0.25rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    border: 1px solid $white-2;
     background-color: $white-0;
     overflow-y: auto;
+}
+
+div.filler {
+    height: 10%;
 }
 </style>
