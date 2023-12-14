@@ -122,10 +122,14 @@ async function submitQuery() {
                         root="Queries"
                         :buttons="['add-folder']"
                         @add-item="saveQuery"
-                        @select-item="(item) => reuseQuery(item.query)"
-                        @remove-item="(item) => removeQueryFromSaved(item)"
                         :items="saved"
-                    />
+                    >
+                        <template #options="{ item }">
+                            <i class="fa-solid fa-pen" @click="item.editing = true" />
+                            <i class="fa-solid fa-rotate" @click="reuseQuery(item.query)" />
+                            <i class="fa-solid fa-trash-can" @click="removeQueryFromSaved(item)" />
+                        </template>
+                    </Directory>
                 </div>
             </section>
         </div>

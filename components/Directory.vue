@@ -122,7 +122,7 @@ function moveItem(target: DirectoryItem) {
                 <i class="fa-solid fa-folder-plus"></i>
             </button>
         </header>
-        <div class="fill-1 column g-1" @dragover.prevent="" @drop="emit('addItem', $event, currentFolder)">
+        <div class="fill-1 column g-2" @dragover.prevent="" @drop="emit('addItem', $event, currentFolder)">
             <div v-for="item in folderItems()"
                 class="folder"
                 @dblclick="selectItem(item)"
@@ -139,9 +139,7 @@ function moveItem(target: DirectoryItem) {
                 <span class="row center-inline g-2" v-else>
                     <i class="fa-solid fa-folder" v-if="item.type =='folder'" />
                     <span class="fill-1">{{ item.name }}</span>
-                    <i class="options fa-solid fa-pen" />
-                    <i class="options fa-solid fa-rotate" />
-                    <i class="options fa-solid fa-trash-can" />
+                    <slot name="options" v-bind="{ item }" />
                 </span>
             </div>
         </div>
@@ -180,6 +178,7 @@ header.row, header.row div.row {
 div.folder {
     cursor: pointer;
     padding: 0.25rem 0.75rem;
+    border: 1px solid transparent;
     border-radius: 0.25rem;
     background-color: $black-1;
 
@@ -189,8 +188,8 @@ div.folder {
         font-family: 'Source Code Pro', monospace;
     }
 
-    i:hover {
-        color: $black-1;
+    i:hover, :slotted(i:hover) {
+        color: $white-4;
     }
 }
 
@@ -204,13 +203,12 @@ div.folder:has(input) {
     
     input {
         flex: 1 1;
-        padding: 3.5px 0.50rem;
+        padding: 3.5px 0.75rem;
         border: none;
         outline: none;
+        font-family: 'Source Code Pro', monospace;
+        color: inherit;
         background: transparent;
-        font-size: inherit;
-        font-weight: inherit;
-        font-family: inherit;
     }
 }
 </style>
