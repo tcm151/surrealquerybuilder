@@ -5,9 +5,13 @@ const hints = useHints()
 const cache = useCache()
 const { settings } = storeToRefs(useSettings())
 
+const events = useEvents()
+events.subscribe(Trigger.switchedNamespaces, async () => {
+    await refreshNuxtData()
+})
+
 const query = cache.get("query:string", () => "")
 const tab = cache.get("lastTab", () => "History")
-
 const results = cache.get<any[]>("query:results", () => [])
 const history = cache.get<string[]>("query:history", () => [])
 const saved = cache.get<any[]>("query:saved", () => [])
