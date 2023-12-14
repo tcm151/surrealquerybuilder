@@ -6,13 +6,13 @@ const hints = useHints()
 function getColor(hint: Hint) {
     switch (hint.type) {
         case "message":
-            return "#8783D1";
+            return "#8700ff";
         case "success":
-            return "#1FAD83";
+            return "#68DE74";
         case "warning":
-            return "#FFCF33";
+            return "#FFDE00";
         case "error":
-            return "#F55D3E";
+            return "#FF009E";
     }
 }
 </script>
@@ -68,8 +68,8 @@ function getColor(hint: Hint) {
     font-weight: 600;
     text-align: center;
     border-radius: 0.25rem;
-    box-shadow: 0.25rem 0.25rem 1rem -0.25rem $white-3,
-                0 0 0.33rem 1px $white-3;
+    box-shadow: 0.25rem 0.25rem 1rem -0.25rem $black-3,
+                0 0 0.33rem 1px $black-3;
     animation: fade-in 256ms;
     pointer-events: all;
 }
