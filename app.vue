@@ -6,8 +6,9 @@ const cache = useCache()
 const { settings } = storeToRefs(useSettings())
 
 const events = useEvents()
-events.subscribe(Trigger.switchedNamespaces, async () => {
-    await refreshNuxtData()
+events.subscribe(Trigger.switchedNamespaces, () => {
+    query.value = ""
+    reloadNuxtApp()
 })
 
 const query = useSessionStorage<string>("query", () => "")
@@ -19,9 +20,9 @@ const validResults = computed(() => {
     return results.value.filter(r => r.result != null)
 })
 
-let showSettings = ref(false)
 const searchText = ref<string>("")
-const showSearch = cache.get("query:search:show", () => false)
+const showSearch = ref<boolean>(false)
+const showSettings = ref(false)
 
 const filteredHistory = computed(() => {
     if (searchText.value !== '') {
@@ -174,7 +175,7 @@ async function submitQuery() {
             <section class="history column g-2" v-if="tab == 'History'">
                 <div class="query" v-for="(item, index) in filteredHistory" :key="index">
                     <p class="p-4">{{ item }}</p>
-                    <div class="buttons row g-2">
+                    <aside class="buttons row g-2">
                         <button draggable="true" @dragstart="grabbedQuery = item">
                             <i class="fa-solid fa-grip-vertical"></i>
                         </button>
@@ -184,7 +185,7 @@ async function submitQuery() {
                         <button @click="removeQueryFromHistory(item)">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
-                    </div>
+                    </aside>
                 </div>
             </section>
         </div>
@@ -201,6 +202,11 @@ async function submitQuery() {
     to {
         transform: rotateZ(360deg);
     }
+}
+
+input[type=search] {
+    font-family: "Source Code Pro", monospace;
+    padding: 0.5rem 1rem;
 }
 
 input[type=search]::-webkit-search-cancel-button:hover {
@@ -228,20 +234,8 @@ article {
 
 section.editor {
     header.row {
-        justify-content: flex-end;
-
         i.spin {
             animation: spin 512ms linear infinite;
-        }
-    }
-
-    div:has(textarea), div.saved-queries {
-        flex: 1 1;
-    }
-
-    div.saved-queries {
-        @media only screen and (max-width: 1000px) {
-            display: none;
         }
     }
 
@@ -254,6 +248,16 @@ section.editor {
         @media only screen and (max-width: 1000px) {
             flex: none;
             resize: vertical;
+        }
+    }
+
+    div:has(textarea), div.saved-queries {
+        flex: 1 1;
+    }
+
+    div.saved-queries {
+        @media only screen and (max-width: 1000px) {
+            display: none;
         }
     }
 }
@@ -272,11 +276,11 @@ section.history, section.saved {
             background-color: $black-1;
         }
 
-        div.buttons {
+        aside {
             top: 0;
             right: 0;
             position: absolute;
-            padding: 0.5rem;
+            padding: 0.75rem;
 
             button {
                 padding: 0;
@@ -289,10 +293,6 @@ section.history, section.saved {
                 color: $white-3;
             }
         }
-    }
-
-    button {
-        padding: 0.25rem 0.5rem;
     }
 }
 
