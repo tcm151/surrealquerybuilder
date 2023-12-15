@@ -191,6 +191,7 @@ input[type=search]::-webkit-search-cancel-button:hover {
 }
 
 article {
+    margin-inline: auto;
     height: calc(100vh - 2rem);
     @include fit-width (2000px, 1rem);
     overflow: hidden;
