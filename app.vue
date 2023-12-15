@@ -162,7 +162,7 @@ async function submitQuery() {
                 </div>
             </header>
             <section class="results column g-2" v-if="tab == 'Results'">
-                <div class="result column g-2" v-for="result in validResults" v-memo="[result]">
+                <div class="result column g-2" v-for="result in validResults">
                     <code class="p-4" >
                         {{ result.result }}
                     </code>
