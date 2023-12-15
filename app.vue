@@ -23,7 +23,7 @@ let showSettings = ref(false)
 const searchText = ref<string>("")
 const showSearch = cache.get("query:search:show", () => false)
 
-function filteredHistory(): any[] {
+const filteredHistory = computed(() => {
     if (searchText.value !== '') {
         const rankings = history.value.map(query => {
             const tokens = searchText.value.split(/\s/)
@@ -38,7 +38,7 @@ function filteredHistory(): any[] {
     else {
         return history.value
     }
-}
+})
 
 function clearHistory() {
     // TODO must confirm with user
@@ -123,7 +123,7 @@ async function submitQuery() {
                 <div class="field">
                     <textarea rows="8" spellcheck="false" @keydown.enter.alt.prevent="submitQuery" v-model="query" />
                 </div>
-                <div class="saved-query-directory">
+                <div class="saved-queries">
                     <Directory
                         root="Queries"
                         :buttons="['add-folder']"
@@ -142,9 +142,6 @@ async function submitQuery() {
         <div class="right column g-2">
             <header class="column g-2">
                 <div class="row g-2">
-                    <button class="link" @click="showSearch = !showSearch">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
                     <button class="link fill-1" @click="tab = 'Results'">
                         <i class="fa-solid fa-square-poll-horizontal"></i>
                         <span>Results</span>
@@ -152,6 +149,9 @@ async function submitQuery() {
                     <button class="link fill-1" @click="tab = 'History'">
                         <i class="fa-solid fa-book"></i>
                         <span>History</span>
+                    </button>
+                    <button class="link" @click="showSearch = !showSearch">
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
                     <button class="link" @click="clearHistory">
                         <i class="fa-solid fa-broom"></i>
@@ -172,7 +172,7 @@ async function submitQuery() {
                 </div>
             </section>
             <section class="history column g-2" v-if="tab == 'History'">
-                <div class="query" v-for="(item, index) in filteredHistory()" :key="index">
+                <div class="query" v-for="(item, index) in filteredHistory" :key="index">
                     <p class="p-4">{{ item }}</p>
                     <div class="buttons row g-2">
                         <button draggable="true" @dragstart="grabbedQuery = item">
@@ -235,11 +235,11 @@ section.editor {
         }
     }
 
-    div:has(textarea), div.saved-query-directory {
+    div:has(textarea), div.saved-queries {
         flex: 1 1;
     }
 
-    div.saved-query-directory {
+    div.saved-queries {
         @media only screen and (max-width: 1000px) {
             display: none;
         }
