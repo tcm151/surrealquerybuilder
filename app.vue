@@ -10,15 +10,18 @@ events.subscribe(Trigger.switchedNamespaces, async () => {
     await refreshNuxtData()
 })
 
-const query = cache.get("query:string", () => "")
+const query = useSessionStorage<string>("query", () => "")
 const tab = cache.get("lastTab", () => "History")
-const results = cache.get<any[]>("query:results", () => [])
-const history = cache.get<string[]>("query:history", () => [])
 const saved = cache.get<any[]>("query:saved", () => [])
+const history = cache.get<string[]>("query:history", () => [])
+const results = cache.get<any[]>("query:results", () => [])
+const validResults = computed(() => {
+    return results.value.filter(r => r.result != null)
+})
 
 let showSettings = ref(false)
+const searchText = ref<string>("")
 const showSearch = cache.get("query:search:show", () => false)
-const searchText = cache.get("query:search:text", () => "")
 
 function filteredHistory(): any[] {
     if (searchText.value !== '') {
@@ -159,8 +162,10 @@ async function submitQuery() {
                 </div>
             </header>
             <section class="results column g-2" v-if="tab == 'Results'">
-                <div class="result column g-2" v-for="result in results.filter(r => r.result != null)">
-                    <code class="p-4">{{ result.result }}</code>
+                <div class="result column g-2" v-for="result in validResults" v-memo="[result]">
+                    <code class="p-4" >
+                        {{ result.result }}
+                    </code>
                 </div>
             </section>
             <section class="history column g-2" v-if="tab == 'History'">
@@ -284,7 +289,6 @@ section.results {
 
     code {
         overflow-x: hidden;
-        overflow-y: visible;
         white-space: pre-wrap;
         font-weight: 400;
         font-family: "Source Code Pro", monospace;
