@@ -15,7 +15,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-    (event: 'addItem', $event: DragEvent, folder: DirectoryItem): void
+    (event: 'addItem', folder: DirectoryItem): void
     (event: 'selectItem', item: DirectoryItem): void
     (event: 'removeItem', item: DirectoryItem): void
 }>()
@@ -122,7 +122,7 @@ function moveItem(target: DirectoryItem) {
                 <i class="fa-solid fa-folder-plus"></i>
             </button>
         </header>
-        <div class="fill-1 column g-2" @dragover.prevent="" @drop="emit('addItem', $event, currentFolder)">
+        <div class="fill-1 column g-2" @dragover.prevent="" @drop="emit('addItem', currentFolder)">
             <div v-for="item in folderItems()"
                 class="folder"
                 @dblclick="selectItem(item)"

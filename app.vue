@@ -41,7 +41,7 @@ function filteredHistory(): any[] {
 }
 
 function clearHistory() {
-
+    // TODO must confirm with user
 }
 
 function reuseQuery (oldQuery: string) {
@@ -54,8 +54,7 @@ function removeQueryFromHistory(oldQuery: string) {
 }
 
 let grabbedQuery = ref<string>('')
-
-function saveQuery(event: DragEvent, folder: any) {
+function saveQuery(folder: any) {
     if (grabbedQuery.value != '') {
         saved.value.push({
             type: 'file',
@@ -72,8 +71,10 @@ function removeQueryFromSaved(item: any) {
     saved.value = saved.value.filter(s => s !== item)
 }
 
+const waiting = ref<boolean>(false)
 async function submitQuery() {
     try {
+        waiting.value = true
         results.value = await $fetch<any>(`${settings.value.host}/sql`, {
             method: "POST",
             headers: {
@@ -85,10 +86,10 @@ async function submitQuery() {
             },
             body: query.value
         })
-
+        
         history.value = history.value.filter(q => q !== query.value)
         history.value.unshift(query.value)
-
+        
         tab.value = 'Results'
         results.value.forEach((r: any) => {
             hints.addSuccess(r.time)
@@ -99,6 +100,7 @@ async function submitQuery() {
         results.value = [{ result: ex.data.information }]
         hints.addError("Failed to execute query.")
     }
+    waiting.value = false
 }
 </script>
 
@@ -114,7 +116,8 @@ async function submitQuery() {
                     </button>
                     <button class="success fill-1" @click="submitQuery">
                         <span>Submit</span>
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i v-if="waiting" class="fa-solid fa-rotate spin" />
+                        <i v-else class="fa-solid fa-paper-plane" />
                     </button>
                 </header>
                 <div class="field">
@@ -191,6 +194,15 @@ async function submitQuery() {
 
 <style scoped lang="scss">
 
+@keyframes spin {
+    from {
+        transform: rotateZ(0deg);
+    }
+    to {
+        transform: rotateZ(360deg);
+    }
+}
+
 input[type=search]::-webkit-search-cancel-button:hover {
     cursor: pointer;
 }
@@ -217,6 +229,10 @@ article {
 section.editor {
     header.row {
         justify-content: flex-end;
+
+        i.spin {
+            animation: spin 512ms linear infinite;
+        }
     }
 
     div:has(textarea), div.saved-query-directory {
