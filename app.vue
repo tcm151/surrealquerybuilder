@@ -200,7 +200,7 @@ article {
         @include column;
     }
 
-    div.left { flex: 4 1 }
+    div.left { flex: 5 1 }
     div.right { flex: 6 1 }
 
     @media only screen and (max-width: 1000px) {
