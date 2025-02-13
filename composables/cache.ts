@@ -6,9 +6,7 @@ interface Cache {
 }
 
 export const useCache = defineStore("cache", () => {
-    const events = useEvents()
     const { settings } = storeToRefs(useSettings())
-
     let cache = useLocalStorage<Cache>(`cache:${settings.value.namespace}`, {})
 
     function get<T>(key: string, fallback: () => T): Ref<T> {

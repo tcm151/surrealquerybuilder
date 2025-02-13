@@ -45,10 +45,6 @@ function clearHistory() {
     // TODO must confirm with user
 }
 
-function reuseQuery (oldQuery: string) {
-    query.value = oldQuery
-}    
-
 function removeQueryFromHistory(oldQuery: string) {
     history.value = history.value.filter(h => h !== oldQuery)
     hints.addWarning("Query removed from history")
@@ -72,6 +68,12 @@ function removeQueryFromSaved(item: any) {
     saved.value = saved.value.filter(s => s !== item)
 }
 
+const defaultShownResults = 25
+const shownResults = ref<number>(defaultShownResults)
+function loadMoreResults() {
+    shownResults.value += defaultShownResults;
+}
+
 const waiting = ref<boolean>(false)
 async function submitQuery() {
     try {
@@ -79,7 +81,6 @@ async function submitQuery() {
         results.value = await $fetch<any>(`${settings.value.host}/sql`, {
             method: "POST",
             headers: {
-                "Content-Type": "text",
                 "Accept": "application/json",
                 "NS": settings.value.namespace,
                 "DB": settings.value.database,
@@ -91,6 +92,8 @@ async function submitQuery() {
         history.value = history.value.filter(q => q !== query.value)
         history.value.unshift(query.value)
         
+        shownResults.value = defaultShownResults
+
         tab.value = 'Results'
         results.value.forEach((r: any) => {
             hints.addSuccess(r.time)
@@ -133,7 +136,7 @@ async function submitQuery() {
                     >
                         <template #options="{ item }">
                             <i class="fa-solid fa-pen" @click="item.editing = true" />
-                            <i class="fa-solid fa-rotate" @click="reuseQuery(item.query)" />
+                            <i class="fa-solid fa-rotate" @click="query = item.query" />
                             <i class="fa-solid fa-trash-can" @click="removeQueryFromSaved(item)" />
                         </template>
                     </Directory>
@@ -168,8 +171,11 @@ async function submitQuery() {
             <section class="results column g-2" v-if="tab == 'Results'">
                 <div class="result column g-2" v-for="result in validResults">
                     <code class="p-4" >
-                        {{ result.result }}
+                        {{ result.result.slice(0, shownResults) }}
                     </code>
+                    <button class="danger" v-if="shownResults < result.result.length" @click="loadMoreResults">
+                        Load More... [{{ `Showing ${shownResults} of ${result.result.length.toLocaleString()}` }}]
+                    </button>
                 </div>
             </section>
             <section class="history column g-2" v-if="tab == 'History'">
@@ -179,7 +185,7 @@ async function submitQuery() {
                         <button draggable="true" @dragstart="grabbedQuery = item">
                             <i class="fa-solid fa-grip-vertical"></i>
                         </button>
-                        <button @click="reuseQuery(item)">
+                        <button @click="query = item">
                             <i class="fa-solid fa-rotate"></i>
                         </button>
                         <button @click="removeQueryFromHistory(item)">
